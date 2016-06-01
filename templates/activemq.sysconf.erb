@@ -1,0 +1,76 @@
+# ------------------------------------------------------------------------
+# Configuration file for running Apache Active MQ as standalone provider
+#
+# This file overwrites the predefined settings of the sysv init-script
+#
+# Active MQ installation dir
+ACTIVEMQ_HOME=/opt/activemq
+ACTIVEMQ_USER="activemq"
+ACTIVEMQ_BASE="$ACTIVEMQ_HOME"
+ACTIVEMQ_CONF="$ACTIVEMQ_BASE/conf"
+ACTIVEMQ_DATA="$ACTIVEMQ_BASE/data"
+ACTIVEMQ_TMP="$ACTIVEMQ_DATA/tmp"
+
+ACTIVEMQ_PIDFILE="$ACTIVEMQ_DATA/activemq-`hostname`.pid"
+JAVA_HOME="<%=@java_home%>"
+JAVACMD="auto"
+
+ACTIVEMQ_OPTS_MEMORY="-Xms<%=@java_xms%>M -Xmx<%=@java_xmx%>M"
+
+#ACTIVEMQ_OPTS="$ACTIVEMQ_OPTS -Dorg.apache.activemq.audit=true"
+
+# Set jvm jmx configuration
+# This enables jmx access over a configured jmx-tcp-port.
+# You have to configure the first four settings if you run a ibm jvm, caused by the
+# fact that IBM's jvm does not support VirtualMachine.attach(PID).
+# JMX access is needed for quering a running activemq instance to gain data or to
+# trigger management operations.
+#
+# Example for ${ACTIVEMQ_CONF}/jmx.access:
+# ---
+# # The "monitorRole" role has readonly access.
+# # The "controlRole" role has readwrite access.
+# monitorRole readonly
+# controlRole readwrite
+# ---
+#
+# Example for ${ACTIVEMQ_CONF}/jmx.password:
+# ---
+# # The "monitorRole" role has password "abc123".
+# # # The "controlRole" role has password "abcd1234".
+# monitorRole abc123
+# controlRole abcd1234
+# ---
+#
+# ACTIVEMQ_SUNJMX_START="-Dcom.sun.management.jmxremote.port=11099 "
+# ACTIVEMQ_SUNJMX_START="$ACTIVEMQ_SUNJMX_START -Dcom.sun.management.jmxremote.password.file=${ACTIVEMQ_CONF}/jmx.password"
+# ACTIVEMQ_SUNJMX_START="$ACTIVEMQ_SUNJMX_START -Dcom.sun.management.jmxremote.access.file=${ACTIVEMQ_CONF}/jmx.access"
+# ACTIVEMQ_SUNJMX_START="$ACTIVEMQ_SUNJMX_START -Dcom.sun.management.jmxremote.ssl=false"
+ACTIVEMQ_SUNJMX_START="$ACTIVEMQ_SUNJMX_START -Dcom.sun.management.jmxremote"
+
+# Set jvm jmx configuration for controlling the broker process
+# You only have to configure the first four settings if you run a ibm jvm, caused by the
+# fact that IBM's jvm does not support VirtualMachine.attach(PID)
+# (see also com.sun.management.jmxremote.port, .jmx.password.file and .jmx.access.file )
+#ACTIVEMQ_SUNJMX_CONTROL="--jmxurl service:jmx:rmi:///jndi/rmi://127.0.0.1:1099/jmxrmi --jmxuser controlRole --jmxpassword abcd1234"
+ACTIVEMQ_SUNJMX_CONTROL=""
+
+# Specify the queue manager URL for using "browse" option of sysv initscript
+if [ -z "$ACTIVEMQ_QUEUEMANAGERURL" ]; then
+ACTIVEMQ_QUEUEMANAGERURL="--amqurl tcp://localhost:61616"
+fi
+
+# Set additional JSE arguments
+ACTIVEMQ_SSL_OPTS="$SSL_OPTS"
+
+# Uncomment to enable YourKit profiling
+#ACTIVEMQ_DEBUG_OPTS="-agentlib:yjpagent"
+
+# Uncomment to enable remote debugging
+#ACTIVEMQ_DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+
+# ActiveMQ tries to shutdown the broker by jmx,
+# after a specified number of seconds send SIGKILL
+if [ -z "$ACTIVEMQ_KILL_MAXSECONDS" ]; then
+ACTIVEMQ_KILL_MAXSECONDS=30
+fi
