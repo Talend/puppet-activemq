@@ -3,7 +3,6 @@ class activemq::config (
   $activemq_template_name         = $activemq::activemq_template_name,
   $config_replace                 = $activemq::config_replace,
   $persistence                    = $activemq::persistence,
-  $zk_address                     = $activemq::zk_address,
   $zk_nodes                       = $activemq::zk_nodes,
   $zk_password                    = $activemq::zk_password,
   $pg_host                        = $activemq::pg_host,
