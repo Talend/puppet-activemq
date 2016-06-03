@@ -8,7 +8,7 @@ class activemq::params {
   $network_user                   = undef
   $dispatcher_response_queue      = 'ipaas.dispatcher.response.queue'
 
-  $pg_host                        = undef
+  $pg_host                        = 'localhost'
   $pg_port                        = 5432
   $pg_db                          = undef
   $pg_username                    = undef
