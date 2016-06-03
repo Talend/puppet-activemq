@@ -25,7 +25,7 @@ class activemq::params {
   $inactive_timout_before_cleanup = 3000
   $persistence                    = undef
   $zk_password                    = undef
-  $zk_nodes                       = undef
+  $zk_nodes                       = 'localhost'
 
   $enable_leveldb_cleanup         = true
   $leveldb_cleanup_days           = 14
