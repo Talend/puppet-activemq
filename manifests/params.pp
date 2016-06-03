@@ -27,7 +27,7 @@ class activemq::params {
   $enable_leveldb_cleanup         = true
   $leveldb_cleanup_days           = 14
 
-  $brokers                        = ''
+  $brokers                        = $::hostname
   $min_brokers                    = 1
   $broker_name                    = undef
 
