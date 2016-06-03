@@ -1,4 +1,10 @@
-class activemq::install {
+class activemq::install (
+
+  $version                   = $activemq::version,
+  $leveldb_clean_cron_ensure = $activemq::leveldb_clean_cron_ensure,
+  $leveldb_cleanup_days      = $activemq::leveldb_cleanup_days
+
+){
 
   package {
     'activemq':

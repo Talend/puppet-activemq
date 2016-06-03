@@ -93,18 +93,21 @@ class activemq (
   $inactive_timout_before_cleanup = $activemq::params::inactive_timout_before_cleanup,
   $persistence                    = $activemq::params::persistence,
   $zk_password                    = $activemq::params::zk_password,
-  $zookeeper_nodes                = $activemq::params::zk_nodes,
+  $zk_nodes                       = $activemq::params::zk_nodes,
   $pg_host                        = $activemq::params::pg_host,
   $pg_port                        = $activemq::params::pg_port,
   $pg_db                          = $activemq::params::pg_db,
   $pg_username                    = $activemq::params::pg_username,
-  $pg_password                    = $activemq::params::password,
+  $pg_password                    = $activemq::params::pg_password,
   $pg_init_connections            = $activemq::params::pg_init_connections,
   $pg_max_connections             = $activemq::params::pg_max_connections,
   $auth_refresh_interval          = $activemq::params::auth_refresh_interval,
   $activemq_auth_ensure           = $activemq::params::activemq_auth_ensure,
   $enable_leveldb_cleanup         = $activemq::params::enable_leveldb_cleanup,
-  $leveldb_cleanup_days           = $activemq::params::leveldb_cleanup_days
+  $leveldb_cleanup_days           = $activemq::params::leveldb_cleanup_days,
+  $service_ensure                 = $activemq::params::service_ensure,
+  $service_enable                 = $activemq::params::service_enable,
+
 
 ) inherits activemq::params {
 

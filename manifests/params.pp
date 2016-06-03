@@ -8,6 +8,9 @@ class activemq::params {
   $network_user                   = undef
   $dispatcher_response_queue      = 'ipaas.dispatcher.response.queue'
 
+  $service_ensure                 = 'running'
+  $service_enable                 = true
+
   $pg_host                        = 'localhost'
   $pg_port                        = 5432
   $pg_db                          = undef
