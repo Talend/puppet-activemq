@@ -116,7 +116,7 @@ class activemq (
     $config_replace = false
   }
 
-  # this is used for communication betweek the extarnal and internal brokers
+  # this is used for communication between the external and internal brokers
   if size($brokers_list) == 1 {
     $discovery_protocol = 'static'
   } else {
