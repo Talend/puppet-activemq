@@ -114,7 +114,7 @@ class activemq (
 
   
 
-  # don't manage the activmeq.xml until we have minimum number of brokers
+  # don't manage the activemq.xml until we have minimum number of brokers
   if size($activemq::params::brokers_list) >= $min_brokers {
     $config_replace = true
   } else {
