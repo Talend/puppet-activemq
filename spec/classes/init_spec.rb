@@ -16,11 +16,10 @@ describe 'activemq' do
                     :ipaddress        => '192.168.0.1'
     }}
 
-    # Test if it compiles                                                                                                                                                                                
+    # Test if it compiles
     it { should compile }
-    it { should have_resource_count(6)}
 
-    # Test all default params are set                                                                                                                                                                    
+    # Test all default params are set
     it {
       should contain_class('activemq')
       should contain_class('activemq::params')
