@@ -129,11 +129,16 @@ class activemq (
     $leveldb_clean_cron_ensure = 'absent'
   }
 
+  class { 'activemq::install': }
+  class { 'activemq::config': }
+  class { 'activemq::service': }
 
+  anchor { 'activemq::begin': }
+  anchor { 'activemq::end': }
 
-  class { 'activemq::install': } ->
-  class { 'activemq::config': } ~>
-  class { 'activemq::service': } ->
-  Class['activemq']
-
+  Anchor['activemq::begin'] ->
+    Class['activemq::install'] ->
+    Class['activemq::config'] ~>
+    Class['activemq::service'] ->
+  Anchor['activemq::end']
 }
