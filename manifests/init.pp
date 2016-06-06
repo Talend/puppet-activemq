@@ -108,12 +108,7 @@ class activemq (
   $service_ensure                 = $activemq::params::service_ensure,
   $service_enable                 = $activemq::params::service_enable,
 
-
 ) inherits activemq::params {
-
-
-  
-
   # don't manage the activemq.xml until we have minimum number of brokers
   if size($activemq::params::brokers_list) >= $min_brokers {
     $config_replace = true
@@ -121,13 +116,12 @@ class activemq (
     $config_replace = false
   }
 
-  #this is used for communication betweek the extarnal and internal brokers
+  # this is used for communication betweek the extarnal and internal brokers
   if size($brokers_list) == 1 {
     $discovery_protocol = 'static'
   } else {
     $discovery_protocol = 'masterslave'
   }
-
 
   if $enable_leveldb_cleanup {
     $leveldb_clean_cron_ensure = 'present'
@@ -143,4 +137,3 @@ class activemq (
   Class['activemq']
 
 }
-
