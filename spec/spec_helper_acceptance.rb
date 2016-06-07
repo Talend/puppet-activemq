@@ -20,6 +20,28 @@ end
 hosts.each do |host|
   on host, 'mkdir -p /etc/facter/facts.d'
   create_remote_file host, '/etc/facter/facts.d/packagecloud_facts.txt', "packagecloud_master_token=#{ENV['PACKAGECLOUD_MASTER_TOKEN']}", :protocol => 'rsync'
+
+  # ActiveMQ stomp testing scripts
+  create_remote_file host, '/tmp/stomp-producer.rb', "
+  require 'onstomp'
+
+  client = OnStomp.connect(\"stomp://\#{ARGV[0]}:\#{ARGV[1]}@0.0.0.0\")
+  client.send(\"/queue/\#{ARGV[2]}\", ARGV[3])
+  client.disconnect
+  ", :protocol => 'rsync'
+
+  create_remote_file host, '/tmp/stomp-consumer.rb', "
+  require 'onstomp'
+
+  client = OnStomp::Client.new(\"stomp://\#{ARGV[0]}:\#{ARGV[1]}@0.0.0.0\")
+  client.connect
+  client.subscribe(\"/queue/\#{ARGV[2]}\", :ack => 'client') do |m|
+    client.ack m
+     puts \"Got a message: \#{m.body}\"
+  end
+
+  sleep(1)
+  ", :protocol => 'rsync'
 end
 
 RSpec.configure do |c|
