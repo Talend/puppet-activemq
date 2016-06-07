@@ -10,18 +10,18 @@ describe 'activemq' do
   it_should_behave_like 'activemq::running'
 
   context 'when accessed with proper credentials' do
-    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin tadmin ipaas.testing.notification.manager.queue test_data') do
+    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin password ipaas.testing.notification.manager.queue test_data') do
       its(:exit_status) { should eq 0 }
     end
 
-    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb tadmin tadmin ipaas.testing.notification.manager.queue') do
+    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb tadmin password ipaas.testing.notification.manager.queue') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should include 'test_data' }
     end
   end
 
   context 'when accessed with wrong username' do
-    describe command('/usr/bin/ruby /tmp/stomp-producer.rb nonexistentuser tadmin ipaas.testing.notification.manager.queue test_data') do
+    describe command('/usr/bin/ruby /tmp/stomp-producer.rb nonexistentuser password ipaas.testing.notification.manager.queue test_data') do
       its(:exit_status) { should eq 1 }
     end
 
@@ -41,11 +41,11 @@ describe 'activemq' do
   end
 
   context 'when trying to work with a wrong queue' do
-    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin tadmin wrong.queue test_data') do
+    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin password wrong.queue test_data') do
       its(:exit_status) { should eq 0 }
     end
 
-    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb tadmin tadmin wrong.queue') do
+    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb tadmin password wrong.queue') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should_not include 'test_data' }
     end
