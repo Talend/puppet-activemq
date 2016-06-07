@@ -26,6 +26,10 @@ describe 'activemq' do
       should contain_class('activemq::install')
       should contain_class('activemq::config')
       should contain_class('activemq::service')
+      should contain_anchor('activemq::begin')
+      should contain_anchor('activemq::end')
+      should contain_package('activemq')
+      should contain_package('talend-activemq-auth')
     }
 
   end
