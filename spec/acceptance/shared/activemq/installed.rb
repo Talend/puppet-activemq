@@ -24,20 +24,14 @@ shared_examples 'activemq::installed' do |parameters|
       user     => 'ams',
       password => 'ams'
     } ->
-    file { '/var/tmp/amqsec.sql':
-      source => 'puppet:///modules/activemq/tmp/amqsec.sql'
-    } ->
-    file { '/var/tmp/ams.sql':
-      source => 'puppet:///modules/activemq/tmp/ams.sql'
-    } ->
     exec { 'import ams db scheme':
       environment => 'PGPASSWORD=ams',
-      command     => '/usr/bin/psql -U ams -h localhost -d ams -f /var/tmp/ams.sql && touch /tmp/ams.created',
+      command     => '/usr/bin/psql -U ams -h localhost -d ams -f /var/lib/activemq/lib/ams.sql && touch /tmp/ams.created',
       creates     => '/tmp/ams.created'
     } ->
     exec { 'import amqsec db scheme':
       environment => 'PGPASSWORD=ams',
-      command     => '/usr/bin/psql -U ams -h localhost -d ams -f /var/tmp/amqsec.sql && touch /tmp/amqsec.created',
+      command     => '/usr/bin/psql -U ams -h localhost -d ams -f /var/lib/activemq/lib/amqsec.sql && touch /tmp/amqsec.created',
       creates     => '/tmp/amqsec.created'
     } ->
     class { '::activemq':
