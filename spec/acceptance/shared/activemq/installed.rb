@@ -24,6 +24,9 @@ shared_examples 'activemq::installed' do |parameters|
       user     => 'ams',
       password => 'ams'
     } ->
+    class { '::activemq':
+      #{parameters.to_s}
+    } ->
     exec { 'import ams db scheme':
       environment => 'PGPASSWORD=ams',
       command     => '/usr/bin/psql -U ams -h localhost -d ams -f /var/lib/activemq/lib/ams.sql && touch /tmp/ams.created',
@@ -34,8 +37,9 @@ shared_examples 'activemq::installed' do |parameters|
       command     => '/usr/bin/psql -U ams -h localhost -d ams -f /var/lib/activemq/lib/amqsec.sql && touch /tmp/amqsec.created',
       creates     => '/tmp/amqsec.created'
     } ->
-    class { '::activemq':
-      #{parameters.to_s}
+    exec { 'set password for the tadmin user':
+      environment => 'PGPASSWORD=ams',
+      command     => '/usr/bin/psql -U ams -h localhost -d ams -c /usr/bin/psql -U ams -h localhost -d ams -c "update amqsec_system_users set password = \\'password\\' where username = \\'tadmin\\'"',
     }
     EOS
 
