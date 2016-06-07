@@ -38,6 +38,8 @@ RSpec.configure do |c|
       shell('puppet module install puppetlabs-stdlib', { :acceptable_exit_codes => [0,1] })
       shell('puppet module install puppetlabs-java', { :acceptable_exit_codes => [0,1] })
       shell('puppet module install computology-packagecloud', { :acceptable_exit_codes => [0,1] })
+      shell('puppet module install puppetlabs-postgresql', { :acceptable_exit_codes => [0,1] })
+      shell('gem install onstomp', { :acceptable_exit_codes => [0] })
     end
   end
 end
