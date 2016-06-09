@@ -46,27 +46,5 @@ describe 'activemq' do
 
     end
 
-
-
-    context 'without params ' do
-
-      # Test if it compiles
-      it { should compile }
-      it { should have_resource_count(6)}
-
-
-
-
-      # Test all default params are set
-      it {
-        should contain_class('activemq')
-        should contain_class('activemq::params')
-        should contain_class('activemq::install')
-        should contain_class('activemq::config')
-        should contain_class('activemq::service')
-      }
-
-
-    end
   end
 end
