@@ -16,18 +16,57 @@ describe 'activemq' do
                     :ipaddress        => '192.168.0.1'
     }}
 
-    # Test if it compiles                                                                                                                                                                                
-    it { should compile }
-    it { should have_resource_count(6)}
 
-    # Test all default params are set                                                                                                                                                                    
-    it {
-      should contain_class('activemq')
-      should contain_class('activemq::params')
-      should contain_class('activemq::install')
-      should contain_class('activemq::config')
-      should contain_class('activemq::service')
-    }
+    context 'without params ' do
 
+      # Test if it compiles
+      it { should compile }
+      it { should have_resource_count(6)}
+
+
+
+
+      # Test all default params are set
+      it {
+        should contain_class('activemq')
+        should contain_class('activemq::params')
+        should contain_class('activemq::install')
+        should contain_class('activemq::config')
+        should contain_class('activemq::service')
+      }
+
+      it {
+        should contain_package('activemq').with_ensure('present')
+      }
+
+      it {
+        should contain_file('activemq').with_ensure('present')
+      }      
+
+
+    end
+
+
+
+    context 'without params ' do
+
+      # Test if it compiles
+      it { should compile }
+      it { should have_resource_count(6)}
+
+
+
+
+      # Test all default params are set
+      it {
+        should contain_class('activemq')
+        should contain_class('activemq::params')
+        should contain_class('activemq::install')
+        should contain_class('activemq::config')
+        should contain_class('activemq::service')
+      }
+
+
+    end
   end
 end
