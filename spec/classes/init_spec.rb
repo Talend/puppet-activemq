@@ -21,7 +21,7 @@ describe 'activemq' do
 
       # Test if it compiles
       it { should compile }
-      it { should have_resource_count(6)}
+      it { should have_resource_count(8)}
 
 
 
@@ -37,10 +37,12 @@ describe 'activemq' do
 
       it {
         should contain_package('activemq').with_ensure('present')
+        should contain_package('talend-activemq-auth').with_ensure('installed')
       }
 
       it {
-        should contain_file('activemq').with_ensure('present')
+        should contain_file('/etc/sysconfig/activemq')
+        should contain_file('/etc/activemq/activemq.xml')
       }      
 
 
