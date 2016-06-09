@@ -5,12 +5,9 @@ class activemq::service (
 
 ){
 
-
   service {'activemq':
-    ensure  => $service_ensure,
-    enable  => $service_enable,
+    ensure => $service_ensure,
+    enable => $service_enable,
   }
-
-
 
 }
