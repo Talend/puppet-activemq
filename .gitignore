@@ -6,3 +6,8 @@ Gemfile.lock
 log
 .vagrant
 spec/fixtures
+.librarian/
+.kitchen/
+.kitchen.local.yml
+.tmp/
+modules/

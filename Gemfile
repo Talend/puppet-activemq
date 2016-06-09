@@ -33,4 +33,10 @@ group :system_tests do
   gem 'beaker'
   gem 'beaker-rspec'
   gem 'vagrant-wrapper'
+
+  gem 'librarian-puppet'
+  gem 'test-kitchen'
+  gem 'kitchen-puppet'
+  gem 'kitchen-vagrant'
+  gem 'vagrant'
 end

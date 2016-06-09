@@ -8,7 +8,10 @@
   "project_page": "https://github.com/Talend/puppet-activemq",
   "issues_url": "https://github.com/Talend/puppet-activemq/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs-java", "version_requirement": "1.5.0"},
+    {"name":"computology-packagecloud"},
+    {"name":"puppetlabs-postgresql"}
   ],
   "data_provider": null
 }
