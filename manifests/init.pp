@@ -108,26 +108,20 @@ class activemq (
   $service_ensure                 = $activemq::params::service_ensure,
   $service_enable                 = $activemq::params::service_enable,
 
-
 ) inherits activemq::params {
-
-
-  
-
-  # don't manage the activmeq.xml until we have minimum number of brokers
+  # don't manage the activemq.xml until we have minimum number of brokers
   if size($activemq::params::brokers_list) >= $min_brokers {
     $config_replace = true
   } else {
     $config_replace = false
   }
 
-  #this is used for communication betweek the extarnal and internal brokers
-  if size($brokers_list) == 1 {
+  # this is used for communication between the external and internal brokers
+  if size($activemq::params::brokers_list) == 1 {
     $discovery_protocol = 'static'
   } else {
     $discovery_protocol = 'masterslave'
   }
-
 
   if $enable_leveldb_cleanup {
     $leveldb_clean_cron_ensure = 'present'
@@ -135,12 +129,16 @@ class activemq (
     $leveldb_clean_cron_ensure = 'absent'
   }
 
+  class { 'activemq::install': }
+  class { 'activemq::config': }
+  class { 'activemq::service': }
 
+  anchor { 'activemq::begin': }
+  anchor { 'activemq::end': }
 
-  class { 'activemq::install': } ->
-  class { 'activemq::config': } ~>
-  class { 'activemq::service': } ->
-  Class['activemq']
-
+  Anchor['activemq::begin'] ->
+    Class['activemq::install'] ->
+    Class['activemq::config'] ~>
+    Class['activemq::service'] ->
+  Anchor['activemq::end']
 }
-
