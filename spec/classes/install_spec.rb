@@ -18,7 +18,7 @@ describe 'activemq' do
 
     # Test if it compiles
     it { should compile }
-    it { should have_resource_count(8)}
+    it { should have_resource_count(7)}
 
     # Test all default params are set
     it {

@@ -1,27 +1,14 @@
 class activemq::install (
-
-  $version                   = $activemq::version,
-  $leveldb_clean_cron_ensure = $activemq::leveldb_clean_cron_ensure,
-  $leveldb_cleanup_days      = $activemq::leveldb_cleanup_days
-
+  $version = $activemq::version,
 ){
 
   package {
     'activemq':
-      ensure => $version;
+      ensure          => $version,
+      install_options => ['--disablerepo=*', '--enablerepo=talend_other'];
 
     'talend-activemq-auth':
       ensure => installed
   }
-
-  # cleanup leveldb log files once a day
-  cron {
-    'cleanup leveldb log':
-      ensure  => $leveldb_clean_cron_ensure,
-      command => "/bin/find /opt/activemq/data/leveldb -maxdepth 1 -regextype posix-egrep -regex '.+[0-9]{16}\\.log' -mtime +${leveldb_cleanup_days} -and -not -exec fuser -s {} ';' -and -delete",
-      hour    => 0,
-      minute  => 0
-  }
-
 
 }
