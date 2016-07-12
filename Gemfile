@@ -27,17 +27,16 @@ group :development do
   gem 'puppet-blacksmith'
   gem 'guard-rake'
   gem 'listen', '~> 3.0.0'
+  gem 'vagrant-wrapper'
+  gem 'kitchen-vagrant'
 end
 
 group :system_tests do
   gem 'beaker'
   gem 'beaker-rspec'
-  gem 'vagrant-wrapper'
 
   gem 'librarian-puppet'
   gem 'test-kitchen'
   gem 'kitchen-puppet'
-  gem 'kitchen-vagrant'
   gem 'kitchen-sync'
-  gem 'vagrant'
 end
