@@ -32,9 +32,6 @@ group :development do
 end
 
 group :system_tests do
-  gem 'beaker'
-  gem 'beaker-rspec'
-
   gem 'librarian-puppet'
   gem 'test-kitchen'
   gem 'kitchen-puppet'
