@@ -5,9 +5,9 @@ FORGE
       puppetlabs-stdlib (>= 0)
     puppetlabs-apt (2.2.2)
       puppetlabs-stdlib (< 5.0.0, >= 4.5.0)
-    puppetlabs-concat (2.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
-    puppetlabs-java (1.5.0)
+    puppetlabs-concat (2.2.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
+    puppetlabs-java (1.6.0)
       puppetlabs-stdlib (< 5.0.0, >= 2.4.0)
     puppetlabs-postgresql (4.7.1)
       puppetlabs-apt (< 3.0.0, >= 1.8.0)
@@ -17,7 +17,7 @@ FORGE
 
 DEPENDENCIES
   computology-packagecloud (>= 0)
-  puppetlabs-java (= 1.5.0)
+  puppetlabs-java (~> 1.0)
   puppetlabs-postgresql (>= 0)
-  puppetlabs-stdlib (>= 1.0.0)
+  puppetlabs-stdlib (>= 1.0)
 
