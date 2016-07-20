@@ -4,6 +4,7 @@ vendor/
 .reviewboardrc
 log
 .vagrant
+build/
 spec/fixtures
 .librarian/
 .kitchen/
