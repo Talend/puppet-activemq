@@ -139,7 +139,7 @@
               bind="tcp://0.0.0.0:61619"
               zkAddress="<%= @zk_address %>"
               zkPassword="<%= @zk_password %>"
-              zkPath="/activemq/leveldb-stores"
+              zkPath="/activemq/<%= @zk_prefix %>/leveldb-stores"
               hostname="<%=@hostname%>"
               />
           </persistenceAdapter>
