@@ -94,6 +94,7 @@ class activemq (
   $persistence                    = $activemq::params::persistence,
   $zk_password                    = $activemq::params::zk_password,
   $zk_nodes                       = $activemq::params::zk_nodes,
+  $zk_prefix                      = $activemq::params::zk_nodes,
   $pg_host                        = $activemq::params::pg_host,
   $pg_port                        = $activemq::params::pg_port,
   $pg_db                          = $activemq::params::pg_db,
