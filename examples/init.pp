@@ -34,7 +34,7 @@ exec { 'import amqsec db scheme':
 } ->
 exec { 'set password for the tadmin user':
   environment => 'PGPASSWORD=ams',
-  command     => '/usr/bin/psql -U ams -h localhost -d ams -c /usr/bin/psql -U ams -h localhost -d ams -c "update amqsec_system_users set password = \'password\' where username = \'tadmin\'"',
+  command     => '/usr/bin/psql -U ams -h localhost -d ams -c "update amqsec_system_users set password = \'password\' where username = \'tadmin\'"',
 } ->
 file { '/tmp/stomp-producer.rb':
   content => "
