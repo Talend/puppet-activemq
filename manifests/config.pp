@@ -47,4 +47,16 @@ class activemq::config (
       ensure  => 'absent',
     }
   }
+
+  if $operatingsystemrelease =~ /^6.*/ {
+      $provider_type = 'init'
+}
+#fix for systemctl on centos7 if sysvinit ever used to control the service
+  elsif $operatingsystemrelease =~ /^7.*/ {
+    $provider_type = 'systemd'
+    ::systemd::unit_file { 'activemq.service':
+      content => template('activemq/etc/systemd/system/activemq.service.erb')
+}
+
+}
 }

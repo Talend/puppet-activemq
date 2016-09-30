@@ -1,0 +1,17 @@
+[Unit]
+Description=Activemq Broker Service
+After=network.target
+Wants=activemq.service
+
+[Service]
+PrivateTmp=true
+ExecStart=/etc/rc.d/init.d/activemq start
+ExecReload=/etc/rc.d/init.d/activemq restart
+ExecStop=/etc/rc.d/init.d/activemq stop
+Type=forking
+Environment=JAVA_HOME=/usr/bin/java
+PIDFile=/opt/activemq/data/activemq-<%= @hostname %>.pid
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
