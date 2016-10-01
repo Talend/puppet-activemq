@@ -54,9 +54,15 @@ class activemq::config (
 #fix for systemctl on centos7 if sysvinit ever used to control the service
   elsif $operatingsystemrelease =~ /^7.*/ {
     $provider_type = 'systemd'
-    ::systemd::unit_file { 'activemq.service':
-      content => template('activemq/etc/systemd/system/activemq.service.erb')
-}
+        ::systemd::unit_file { 'activemq.service':
+      content => template('activemq/etc/systemd/system/activemq.service.erb'),
+  }
+  exec { 'defaulting the service to systemctl':
+           command => 'chkconfig activemq --del && mv /etc/init.d/activemq /opt/activemq/bin/activemq',
+	   path    => '/usr/bin:/usr/sbin:/bin',
+           unless  => ['/usr/bin/test -f /opt/activemq/bin/activemq']
+  } 
+
 
 }
 }
