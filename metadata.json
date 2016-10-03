@@ -11,7 +11,8 @@
     {"name":"puppetlabs-stdlib", "version_requirement": ">= 1.0.0 < 5.0.0"},
     {"name":"puppetlabs-java", "version_requirement": "1.x"},
     {"name":"computology-packagecloud", "version_requirement": "0.x"},
-    {"name":"puppetlabs-postgresql", "version_requirement": "4.x"}
+    {"name":"puppetlabs-postgresql", "version_requirement": "4.x"},
+    {"name":"camptocamp-systemd", "version_requirement": "0.x"}
   ]
 }
 
