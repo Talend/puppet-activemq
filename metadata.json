@@ -1,6 +1,6 @@
 {
   "name": "talend-activemq",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "talend",
   "summary": "Module managing ActiveMQ",
   "license": "MIT",
