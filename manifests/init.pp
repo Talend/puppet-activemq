@@ -108,6 +108,10 @@ class activemq (
   $leveldb_cleanup_days           = $activemq::params::leveldb_cleanup_days,
   $service_ensure                 = $activemq::params::service_ensure,
   $service_enable                 = $activemq::params::service_enable,
+  $persistence_pg_host            = undef,
+  $persistence_pg_password        = undef,
+  $pg_init_connections            = $activemq::params::pg_init_connections,
+  $pg_max_connections             = $activemq::params::pg_max_connections
 
 ) inherits activemq::params {
   # don't manage the activemq.xml until we have minimum number of brokers

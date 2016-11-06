@@ -43,6 +43,20 @@
     <% end -%>
 <% end -%>
 
+<% if @persistence == 'postgres' -%>
+
+       <bean id="postgres-persist-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
+          <property name="dataSourceName" value="postgresPresistence"/>
+          <property name="serverName" value="<%= @persistence_pg_host %>"/>
+          <property name="portNumber" value="5432"/>
+          <property name="databaseName" value="activemq"/>
+          <property name="user" value="activemq"/>
+          <property name="password" value="<%= @persistence_pg_password %>"/>
+          <property name="initialConnections" value="<%= @pg_init_connections %>"/>
+          <property name="maxConnections" value="<%= @pg_max_connections %>"/>
+        </bean>
+
+<% end -%>
     <!--
         The <broker> element is used to configure the ActiveMQ broker.
     -->
@@ -144,6 +158,16 @@
               />
           </persistenceAdapter>
 
+<% elsif @persistence == 'postgres' -%>
+        <persistenceAdapter>
+        <jdbcPersistenceAdapter dataDirectory="${activemq.data}" dataSource="#postgres-persist-ds" lockKeepAlivePeriod="5000">
+            <locker>
+                <lease-database-locker lockAcquireSleepInterval="10000"/>
+            </locker>
+        </jdbcPersistenceAdapter>
+    </persistenceAdapter>
+
+
 <% end -%>
 
           <!--
@@ -201,3 +225,4 @@
 
 </beans>
 <!-- END SNIPPET: example -->
+
