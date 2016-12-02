@@ -16,9 +16,7 @@ class activemq::config (
   $talend_activemq_auth_ensure    = $activemq::activemq_auth_ensure,
   $java_home                      = $activemq::java_home
 
-
 ){
-
 
   $broker_name_real = $activemq::params::broker_name_real
   $java_xmx         = floor($::memorysize_mb * 0.70)

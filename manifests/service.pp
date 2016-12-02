@@ -1,7 +1,7 @@
 class activemq::service (
 
-  $service_ensure = 'running',
-  $service_enable = true
+  $service_ensure = $activemq::service_ensure,
+  $service_enable = $activemq::service_enable,
 
 ){
 

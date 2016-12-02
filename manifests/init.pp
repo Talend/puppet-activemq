@@ -114,6 +114,7 @@ class activemq (
   $pg_max_connections             = $activemq::params::pg_max_connections
 
 ) inherits activemq::params {
+
   # don't manage the activemq.xml until we have minimum number of brokers
   if size($activemq::params::brokers_list) >= $min_brokers {
     $config_replace = true
@@ -146,4 +147,5 @@ class activemq (
     Class['activemq::config'] ~>
     Class['activemq::service'] ->
   Anchor['activemq::end']
+
 }
