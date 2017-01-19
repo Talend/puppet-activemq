@@ -3,7 +3,7 @@ class activemq::install (
   $version              = $activemq::version,
   $activemq_auth_ensure = $activemq::activemq_auth_ensure,
 
-){
+) {
 
   package { 'activemq':
     ensure          => $version,

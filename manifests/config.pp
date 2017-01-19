@@ -1,7 +1,6 @@
 class activemq::config (
 
   $activemq_template_name         = $activemq::activemq_template_name,
-  $config_replace                 = $activemq::config_replace,
   $persistence                    = $activemq::persistence,
   $zk_nodes                       = $activemq::zk_nodes,
   $zk_password                    = $activemq::zk_password,
@@ -18,7 +17,7 @@ class activemq::config (
 
 ){
 
-  $broker_name_real = $activemq::params::broker_name_real
+  $broker_name_real = regsubst($::ipaddress, '\.', '-','G')
   $java_xmx         = floor($::memorysize_mb * 0.70)
   $java_xms         = floor($::memorysize_mb * 0.15)
 
@@ -30,8 +29,7 @@ class activemq::config (
     '/etc/activemq/activemq.xml':
       content => template('activemq/activemq.xml.erb'),
       mode    => '0660',
-      group   => 'activemq',
-      replace => $config_replace;
+      group   => 'activemq';
   }
 
   #  configure persistence

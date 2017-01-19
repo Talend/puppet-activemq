@@ -11,7 +11,7 @@ class activemq (
   $persistence                    = $activemq::params::persistence,
   $zk_password                    = $activemq::params::zk_password,
   $zk_nodes                       = $activemq::params::zk_nodes,
-  $zk_prefix                      = $activemq::params::zk_nodes,
+  $zk_prefix                      = $activemq::params::zk_prefix,
   $pg_host                        = $activemq::params::pg_host,
   $pg_port                        = $activemq::params::pg_port,
   $pg_db                          = $activemq::params::pg_db,
@@ -30,24 +30,14 @@ class activemq (
 
 ) inherits activemq::params {
 
-  # don't manage the activemq.xml until we have minimum number of brokers
-  if size($activemq::params::brokers_list) >= $min_brokers {
-    $config_replace = true
-  } else {
-    $config_replace = false
+  class { '::activemq::install':
+  } ->
+  class { '::activemq::config':
+  } ->
+  class { '::activemq::service':
   }
 
-  class { 'activemq::install': }
-  class { 'activemq::config': }
-  class { 'activemq::service': }
-
-  anchor { 'activemq::begin': }
-  anchor { 'activemq::end': }
-
-  Anchor['activemq::begin'] ->
-    Class['activemq::install'] ->
-    Class['activemq::config'] ~>
-    Class['activemq::service'] ->
-  Anchor['activemq::end']
-
+  contain ::activemq::install
+  contain ::activemq::config
+  contain ::activemq::service
 }
