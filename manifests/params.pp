@@ -4,8 +4,6 @@ class activemq::params {
 
   $java_home                      = '/usr/java/default'
   $jmx_enabled                    = false
-  $network_password               = undef
-  $network_user                   = undef
   $dispatcher_response_queue      = 'ipaas.dispatcher.response.queue'
 
   $service_ensure                 = 'running'

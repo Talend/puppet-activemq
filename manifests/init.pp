@@ -2,8 +2,6 @@ class activemq (
 
   $version                        = $activemq::params::version,
   $jmx_enabled                    = $activemq::params::jmx_enabled,
-  $network_password               = $activemq::params::network_password,
-  $network_user                   = $activemq::params::network_user,
   $dispatcher_response_queue      = $activemq::params::dispatcher_response_queue,
   $brokers                        = $activemq::params::brokers,
   $java_home                      = $activemq::params::java_home,
