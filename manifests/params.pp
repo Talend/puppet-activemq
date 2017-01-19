@@ -1,6 +1,6 @@
 class activemq::params {
 
-  $version                        = 'present'
+  $version                        = '5.11.1-1'
 
   $java_home                      = '/usr/java/default'
   $jmx_enabled                    = false
