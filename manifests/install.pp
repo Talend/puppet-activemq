@@ -1,5 +1,8 @@
 class activemq::install (
-  $version = $activemq::version,
+
+  $version              = $activemq::version,
+  $activemq_auth_ensure = $activemq::activemq_auth_ensure,
+
 ){
 
   package {
@@ -8,7 +11,7 @@ class activemq::install (
       install_options => ['--disablerepo=*', '--enablerepo=talend_other'];
 
     'talend-activemq-auth':
-      ensure => installed
+      ensure => $activemq_auth_ensure
   }
 
 }
