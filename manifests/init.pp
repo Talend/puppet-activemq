@@ -37,13 +37,6 @@ class activemq (
     $config_replace = false
   }
 
-  # this is used for communication between the external and internal brokers
-  if size($activemq::params::brokers_list) == 1 {
-    $discovery_protocol = 'static'
-  } else {
-    $discovery_protocol = 'masterslave'
-  }
-
   class { 'activemq::install': }
   class { 'activemq::config': }
   class { 'activemq::service': }
