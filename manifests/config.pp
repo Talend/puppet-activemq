@@ -13,9 +13,15 @@ class activemq::config (
   $pg_max_connections             = $activemq::pg_max_connections,
   $auth_refresh_interval          = $activemq::auth_refresh_interval,
   $talend_activemq_auth_ensure    = $activemq::activemq_auth_ensure,
-  $java_home                      = $activemq::java_home
+  $java_home                      = $activemq::java_home,
+  $brokers                        = $activemq::brokers,
 
-){
+) {
+
+  $brokers_list = split($brokers, ',')
+
+  #remove self from the list
+  $brokers_list_real =  delete($brokers_list, $::hostname)
 
   $broker_name_real = regsubst($::ipaddress, '\.', '-','G')
   $java_xmx         = floor($::memorysize_mb * 0.70)
