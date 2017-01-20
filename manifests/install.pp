@@ -1,16 +1,23 @@
 class activemq::install (
 
-  $version              = $activemq::version,
-  $activemq_auth_ensure = $activemq::activemq_auth_ensure,
+  $version = $activemq::version,
 
 ) {
 
-  package { 'activemq':
-    ensure          => $version,
-    install_options => ['--disablerepo=*', '--enablerepo=talend_other'],
+  group { 'activemq':
+    ensure => present,
+    gid    => '92',
+    system => true,
   } ->
-  package { 'talend-activemq-auth':
-    ensure => $activemq_auth_ensure,
+  user { 'activemq':
+    ensure => present,
+    gid    => '92',
+    uid    => '92',
+    home   => '/opt/activemq',
+    shell  => '/bin/bash',
+  } ->
+  package { 'activemq':
+    ensure => $version,
   }
 
 }

@@ -28,56 +28,35 @@
         </property>
     </bean>
 
-<% if @pg_host -%>
-    <% unless @pg_host.empty? -%>
-    <bean id="psqlDataSource" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
-        <property name="dataSourceName" value="ipaasAmqSecDS"/>
-        <property name="serverName" value="<%= @pg_host %>"/>
-        <property name="portNumber" value="<%= @pg_port %>"/>
-        <property name="databaseName" value="<%= @pg_db %>"/>
-        <property name="user" value="<%= @pg_username %>"/>
-        <property name="password" value="<%= @pg_password %>"/>
+   <!-- Allows accessing the server log -->
+    <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
+          lazy-init="false" scope="singleton"
+          init-method="start" destroy-method="stop">
+    </bean>
+
+<% if @persistence == 'postgres' -%>
+   <!-- Configures connection to the PostgreSQL used for persistence -->
+    <bean id="postgres-persist-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
+        <property name="dataSourceName" value="postgresPresistence"/>
+        <property name="serverName" value="<%= @persistence_pg_host %>"/>
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="activemq"/>
+        <property name="user" value="activemq"/>
+        <property name="password" value="<%= @persistence_pg_password %>"/>
         <property name="initialConnections" value="<%= @pg_init_connections %>"/>
         <property name="maxConnections" value="<%= @pg_max_connections %>"/>
     </bean>
-    <% end -%>
 <% end -%>
 
-<% if @persistence == 'postgres' -%>
-
-       <bean id="postgres-persist-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
-          <property name="dataSourceName" value="postgresPresistence"/>
-          <property name="serverName" value="<%= @persistence_pg_host %>"/>
-          <property name="portNumber" value="5432"/>
-          <property name="databaseName" value="activemq"/>
-          <property name="user" value="activemq"/>
-          <property name="password" value="<%= @persistence_pg_password %>"/>
-          <property name="initialConnections" value="<%= @pg_init_connections %>"/>
-          <property name="maxConnections" value="<%= @pg_max_connections %>"/>
-        </bean>
-
-<% end -%>
     <!--
         The <broker> element is used to configure the ActiveMQ broker.
     -->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="<%= @broker_name_real %>" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000">
 
-<% if @pg_host -%>
-    <% unless @pg_host.empty? -%>
-        <plugins>
-            <bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"
-                      xmlns="http://www.springframework.org/schema/beans">
-                <property name="dataSource" ref="psqlDataSource"/>
-                <property name="refreshInterval" value="<%= @auth_refresh_interval %>"/>
-            </bean>
-        </plugins>
-    <% end -%>
-<% end -%>
-
         <destinationPolicy>
             <policyMap>
               <policyEntries>
-                <policyEntry queue="ipaas.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timout_before_cleanup%>" >
+                <policyEntry queue="ipaas.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" >
                     <deadLetterStrategy>
                         <sharedDeadLetterStrategy processNonPersistent="true">
                             <deadLetterQueue>
@@ -86,7 +65,7 @@
                         </sharedDeadLetterStrategy>
                     </deadLetterStrategy>
                 </policyEntry>
-                <policyEntry queue="ipaas.ext.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timout_before_cleanup%>" >
+                <policyEntry queue="ipaas.ext.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" >
                     <deadLetterStrategy>
                         <sharedDeadLetterStrategy processNonPersistent="true">
                             <deadLetterQueue>
@@ -109,7 +88,7 @@
                   </pendingMessageLimitStrategy>
                 </policyEntry>
                 <% if @clean_inactive_destinations -%>
-                <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timout_before_cleanup%>"/>
+                <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>"/>
                 <% end -%>
               </policyEntries>
             </policyMap>
@@ -124,11 +103,11 @@
             http://activemq.apache.org/jmx.html
         -->
         <managementContext>
-        <% if  @jmx_enabled -%>
-        <managementContext createConnector="true" connectorPort="1099" jmxDomainName="org.apache.activemq"/>
-        <% else -%>
-        <managementContext createConnector="false" />
-        <% end -%>
+            <% if  @jmx_enabled -%>
+            <managementContext createConnector="true" connectorPort="1099" jmxDomainName="org.apache.activemq"/>
+            <% else -%>
+            <managementContext createConnector="false" />
+            <% end -%>
         </managementContext>
 
         <!--
@@ -139,36 +118,31 @@
             http://activemq.apache.org/persistence.html
         -->
 <% if @persistence == 'kahadb' -%>
-
         <persistenceAdapter>
             <kahaDB directory="${activemq.data}/kahadb"/>
         </persistenceAdapter>
-
 <% elsif @persistence == 'replicated_leveldb' -%>
-
         <persistenceAdapter>
             <replicatedLevelDB
               directory="${activemq.data}/leveldb"
               replicas="3"
               bind="tcp://0.0.0.0:61619"
-              zkAddress="<%= @zk_address %>"
+              zkAddress="<%= @zk_nodes.split(',').sort.join(':2181,') + ":2181" %>"
               zkPassword="<%= @zk_password %>"
               zkPath="/activemq/<%= @zk_prefix %>/leveldb-stores"
-              hostname="<%=@hostname%>"
+              hostname="<%= @hostname %>"
               />
           </persistenceAdapter>
-
 <% elsif @persistence == 'postgres' -%>
         <persistenceAdapter>
-        <jdbcPersistenceAdapter dataDirectory="${activemq.data}" dataSource="#postgres-persist-ds" lockKeepAlivePeriod="5000">
-            <locker>
-                <lease-database-locker lockAcquireSleepInterval="10000"/>
-            </locker>
-        </jdbcPersistenceAdapter>
-    </persistenceAdapter>
-
-
+            <jdbcPersistenceAdapter dataDirectory="${activemq.data}" dataSource="#postgres-persist-ds" lockKeepAlivePeriod="5000">
+                <locker>
+                    <lease-database-locker lockAcquireSleepInterval="10000"/>
+                </locker>
+            </jdbcPersistenceAdapter>
+        </persistenceAdapter>
 <% end -%>
+
 
           <!--
             The systemUsage controls the maximum amount of space the broker will
@@ -198,7 +172,7 @@
 <% if @persistence == 'kahadb' -%>
         <networkConnectors>
         <% @brokers_list_real.sort.each do |broker| %>
-           <networkConnector name="connector-<%=broker%>"  uri="static:(tcp://<%=broker%>:61616)" />
+           <networkConnector name="connector-<%= broker %>"  uri="static:(tcp://<%= broker %>:61616)" />
         <% end %>
         </networkConnectors>
 <% end -%>
@@ -207,13 +181,22 @@
             <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
             <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
             <transportConnector name="http" uri="http://0.0.0.0:8080"/>
-
         </transportConnectors>
 
         <!-- destroy the spring context on shutdown to stop jetty -->
         <shutdownHooks>
             <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
         </shutdownHooks>
+
+<% if @auth_enabled -%>
+        <plugins>
+            <bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"
+                  xmlns="http://www.springframework.org/schema/beans">
+                  <property name="activemqSecurityURL" value="<%= @auth_url %>" />
+                  <property name="refreshInterval" value="<%= @auth_refresh_interval %>" />
+            </bean>
+        </plugins>
+<% end -%>
 
     </broker>
 

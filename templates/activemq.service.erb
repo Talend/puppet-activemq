@@ -1,0 +1,12 @@
+[Unit]
+Description=Apache ActiveMQ
+
+[Service]
+Type=forking
+PIDFile=/opt/activemq/data/activemq.pid
+ExecStart=/opt/activemq/bin/activemq restart
+ExecReload=/opt/activemq/bin/activemq restart
+ExecStop=/opt/activemq/bin/activemq kill
+
+[Install]
+Alias=activemq

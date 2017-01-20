@@ -5,6 +5,10 @@ class activemq::service (
 
 ){
 
+  file { '/usr/lib/systemd/system/activemq.service':
+    ensure  => present,
+    content => template('activemq/activemq.service.erb'),
+  } ->
   service { 'activemq':
     ensure => $service_ensure,
     enable => $service_enable,
