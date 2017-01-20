@@ -64,4 +64,13 @@ describe 'activemq' do
     end
   end
 
+  describe user('activemq') do
+    it { should exist }
+    it { should belong_to_group 'activemq' }
+  end
+
+  describe group('activemq') do
+    it { should exist }
+  end
+
 end

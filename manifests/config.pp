@@ -1,19 +1,19 @@
 class activemq::config (
 
-  $persistence                    = $activemq::persistence,
-  $zk_nodes                       = $activemq::zk_nodes,
-  $zk_password                    = $activemq::zk_password,
-  $pg_host                        = $activemq::pg_host,
-  $pg_port                        = $activemq::pg_port,
-  $pg_db                          = $activemq::pg_db,
-  $pg_username                    = $activemq::pg_username,
-  $pg_password                    = $activemq::pg_password,
-  $pg_init_connections            = $activemq::pg_init_connections,
-  $pg_max_connections             = $activemq::pg_max_connections,
-  $auth_enabled                   = $activemq::auth_enabled,
-  $auth_url                       = $activemq::auth_url,
-  $auth_refresh_interval          = $activemq::auth_refresh_interval,
-  $brokers                        = $activemq::brokers,
+  $persistence           = $activemq::persistence,
+  $zk_nodes              = $activemq::zk_nodes,
+  $zk_password           = $activemq::zk_password,
+  $pg_host               = $activemq::pg_host,
+  $pg_port               = $activemq::pg_port,
+  $pg_db                 = $activemq::pg_db,
+  $pg_username           = $activemq::pg_username,
+  $pg_password           = $activemq::pg_password,
+  $pg_init_connections   = $activemq::pg_init_connections,
+  $pg_max_connections    = $activemq::pg_max_connections,
+  $auth_enabled          = $activemq::auth_enabled,
+  $auth_url              = $activemq::auth_url,
+  $auth_refresh_interval = $activemq::auth_refresh_interval,
+  $brokers               = $activemq::brokers,
 
 ) {
 
