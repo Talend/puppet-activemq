@@ -18,6 +18,9 @@ class activemq::install (
   } ->
   package { 'activemq':
     ensure => $version,
+  } ->
+  package { 'activemq-security-plugin':
+    ensure => installed,
   }
 
 }

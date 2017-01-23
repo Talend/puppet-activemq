@@ -17,6 +17,17 @@ describe 'activemq' do
     end
   end
 
+  context 'when activemq-security-plugin installed and configured' do
+    describe package('activemq-security-plugin') do
+      it { should be_installed }
+    end
+
+    describe file('/opt/activemq/conf/activemq.xml') do
+      its(:content) { should include '<bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"' }
+      its(:content) { should include '<property name="activemqSecurityURL" value="http://localhost:9999/activemq-security-service/authenticate' }
+    end
+  end
+
   context 'when activemq-security-service ready' do
     describe command('/usr/bin/curl -u tadmin:password http://localhost:9999/activemq-security-service/authenticate') do
       its(:exit_status) { should eq 0 }
