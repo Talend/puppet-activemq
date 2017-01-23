@@ -1,7 +1,6 @@
 class activemq (
 
-  #$version                        = '5.13.3-1.el7.centos',
-  $version                         = '5.14.3-4',
+  $version                         = 'latest',
   $jmx_enabled                     = false,
   $dispatcher_response_queue       = 'ipaas.dispatcher.response.queue',
   $brokers                         = $::hostname,
