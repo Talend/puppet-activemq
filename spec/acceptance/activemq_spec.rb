@@ -30,7 +30,7 @@ describe 'activemq' do
   end
 
   context 'when activemq-security-service ready' do
-    describe command('/usr/bin/curl -u tadmin:password http://localhost:9999/activemq-security-service/authenticate') do
+    describe command('/usr/bin/curl -u admin:password http://localhost:9999/activemq-security-service/authenticate') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should include 'destination' }
       its(:stdout) { should include 'queue' }
@@ -39,11 +39,11 @@ describe 'activemq' do
   end
 
   context 'when accessed with proper credentials' do
-    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin password ipaas.testing.notification.manager.queue test_data') do
+    describe command('/usr/bin/ruby /tmp/stomp-producer.rb admin password ipaas.testing.notification.manager.queue test_data') do
       its(:exit_status) { should eq 0 }
     end
 
-    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb tadmin password ipaas.testing.notification.manager.queue') do
+    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb admin password ipaas.testing.notification.manager.queue') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should include 'test_data' }
     end
@@ -56,24 +56,24 @@ describe 'activemq' do
   end
 
   context 'when accessed with wrong password' do
-    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin wrongpassword ipaas.testing.notification.manager.queue test_data') do
+    describe command('/usr/bin/ruby /tmp/stomp-producer.rb admin wrongpassword ipaas.testing.notification.manager.queue test_data') do
       its(:exit_status) { should eq 1 }
     end
   end
 
   context 'when trying to work with a wrong queue' do
-    describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin password wrong.queue test_data') do
+    describe command('/usr/bin/ruby /tmp/stomp-producer.rb admin password wrong.queue test_data') do
       its(:exit_status) { should eq 0 }
     end
 
-    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb tadmin password wrong.queue') do
+    describe command('/usr/bin/ruby /tmp/stomp-consumer.rb admin password wrong.queue') do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should_not include 'test_data' }
     end
 
     describe file('/opt/activemq/data/activemq.log') do
-      its(:content) { should include 'User tadmin is not authorized to read from: queue://wrong.queue' }
-      its(:content) { should include 'User tadmin is not authorized to write to: queue://wrong.queue' }
+      its(:content) { should include 'User admin is not authorized to read from: queue://wrong.queue' }
+      its(:content) { should include 'User admin is not authorized to write to: queue://wrong.queue' }
     end
   end
 

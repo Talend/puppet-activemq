@@ -77,9 +77,9 @@ exec { 'import amqsec db scheme':
   command     => '/usr/bin/psql -U ams -h localhost -d ams -f /opt/activemq/lib/tipaas/amqsec.sql && touch /tmp/amqsec.created',
   creates     => '/tmp/amqsec.created'
 } ->
-exec { 'set password for the tadmin user':
+exec { 'set password for the admin user':
   environment => 'PGPASSWORD=ams',
-  command     => '/usr/bin/psql -U ams -h localhost -d ams -c "update amqsec_system_users set password = \'password\' where username = \'tadmin\'"',
+  command     => '/usr/bin/psql -U ams -h localhost -d ams -c "update amqsec_system_users set password = \'password\' where username = \'admin\'"',
 } ->
 file { '/tmp/stomp-producer.rb':
   content => "
