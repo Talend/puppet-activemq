@@ -17,6 +17,15 @@ describe 'activemq' do
     end
   end
 
+  context 'when activemq-security-service ready' do
+    describe command('/usr/bin/curl -u tadmin:password http://localhost:9999/activemq-security-service/authenticate') do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should include 'destination' }
+      its(:stdout) { should include 'queue' }
+      its(:stdout) { should include 'ipaas' }
+    end
+  end
+
   context 'when accessed with proper credentials' do
     describe command('/usr/bin/ruby /tmp/stomp-producer.rb tadmin password ipaas.testing.notification.manager.queue test_data') do
       its(:exit_status) { should eq 0 }
