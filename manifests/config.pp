@@ -10,7 +10,6 @@ class activemq::config (
   $pg_password           = $activemq::pg_password,
   $pg_init_connections   = $activemq::pg_init_connections,
   $pg_max_connections    = $activemq::pg_max_connections,
-  $auth_enabled          = $activemq::auth_enabled,
   $auth_url              = $activemq::auth_url,
   $auth_refresh_interval = $activemq::auth_refresh_interval,
   $brokers               = $activemq::brokers,

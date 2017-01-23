@@ -188,7 +188,6 @@
             <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
         </shutdownHooks>
 
-<% if @auth_enabled -%>
         <plugins>
             <bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"
                   xmlns="http://www.springframework.org/schema/beans">
@@ -196,7 +195,6 @@
                   <property name="refreshInterval" value="<%= @auth_refresh_interval %>" />
             </bean>
         </plugins>
-<% end -%>
 
     </broker>
 

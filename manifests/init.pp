@@ -19,7 +19,6 @@ class activemq (
   $pg_password                     = undef,
   $pg_init_connections             = 1,
   $pg_max_connections              = 16,
-  $auth_enabled                    = true,
   $auth_url                        = 'http://localhost:8080/activemq-security-service/authenticate',
   $auth_refresh_interval           = '900000',
   $service_ensure                  = 'running',
