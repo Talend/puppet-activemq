@@ -51,7 +51,11 @@
     <!--
         The <broker> element is used to configure the ActiveMQ broker.
     -->
+    <% if  @jmx_enabled -%>
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="<%= @broker_name_real %>" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000" useJmx="true">
+    <% else -%>
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="<%= @broker_name_real %>" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000">
+    <% end -%>
 
         <destinationPolicy>
             <policyMap>
