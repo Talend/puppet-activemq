@@ -1,6 +1,7 @@
 class activemq::install (
 
-  $version = $activemq::version,
+  $version              = $activemq::version,
+  $ams_security_version = $activemq::ams_security_version
 
 ) {
 
@@ -20,7 +21,7 @@ class activemq::install (
     ensure => $version,
   } ->
   package { 'activemq-security-plugin':
-    ensure => installed,
+    ensure => $ams_security_version,
   }
 
 }

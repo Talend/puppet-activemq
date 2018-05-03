@@ -30,6 +30,12 @@ file { '/opt/tomcat':
 package { 'activemq-security-service':
   ensure => present,
 } ->
+file { 'ams security link':
+  ensure => link,
+  force  => true,
+  path   => '/opt/tomcat/webapps/activemq-security-service',
+  target => '/opt/activemq-security-service',
+} ->
 file_line { 'amssec-password':
   ensure => present,
   path   => '/opt/tomcat/webapps/activemq-security-service/WEB-INF/classes/datasource.properties',

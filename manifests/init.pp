@@ -24,6 +24,7 @@ class activemq (
   $service_enable                  = true,
   $persistence_pg_host             = undef,
   $persistence_pg_password         = undef,
+  $ams_security_version            = 'latest',
 
 ) {
 
