@@ -8,6 +8,7 @@ PuppetLint.configuration.ignore_paths = %w(
   vendor/**/*.pp
   test/**/*.pp
   examples/**/*.pp
+  modules/**/*.pp
 )
 
 desc 'Validate manifests, templates, and ruby files'
