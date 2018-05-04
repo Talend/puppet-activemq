@@ -9,6 +9,7 @@ describe 'activemq' do
     end
 
     describe port(8161) do
+      sleep 15
       it { should be_listening }
     end
 
