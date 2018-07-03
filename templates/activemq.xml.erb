@@ -92,8 +92,14 @@
                   </pendingMessageLimitStrategy>
                 </policyEntry>
                 <% if @clean_inactive_destinations -%>
-                <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>"/>
+                  <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup-%>" producerFlowControl="true" optimizedDispatch="true">
+                <% else -%>
+                  <policyEntry queue=">" producerFlowControl="true" optimizedDispatch="true">
                 <% end -%>
+                    <pendingMessageLimitStrategy>
+                      <prefetchRatePendingMessageLimitStrategy multiplier="2"/>
+                    </pendingMessageLimitStrategy>
+                  </policyEntry>
               </policyEntries>
             </policyMap>
         </destinationPolicy>
@@ -181,9 +187,9 @@
         </networkConnectors>
 <% end -%>
         <transportConnectors>
-            <!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <!-- DOS protection, limit concurrent connections to 5000 and frame size to 100MB -->
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=5000&amp;wireFormat.maxFrameSize=104857600"/>
             <transportConnector name="http" uri="http://0.0.0.0:8080"/>
         </transportConnectors>
 
