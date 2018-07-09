@@ -60,7 +60,10 @@
         <destinationPolicy>
             <policyMap>
               <policyEntries>
-                <policyEntry queue="ipaas.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" >
+                <policyEntry queue="ipaas.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
+                    <pendingSubscriberPolicy>
+                        <vmCursor/>
+                    </pendingSubscriberPolicy>
                     <deadLetterStrategy>
                         <sharedDeadLetterStrategy processNonPersistent="true">
                             <deadLetterQueue>
@@ -69,7 +72,10 @@
                         </sharedDeadLetterStrategy>
                     </deadLetterStrategy>
                 </policyEntry>
-                <policyEntry queue="ipaas.ext.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" >
+                <policyEntry queue="ipaas.ext.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
+                    <pendingSubscriberPolicy>
+                        <vmCursor/>
+                    </pendingSubscriberPolicy>
                     <deadLetterStrategy>
                         <sharedDeadLetterStrategy processNonPersistent="true">
                             <deadLetterQueue>
@@ -92,10 +98,13 @@
                   </pendingMessageLimitStrategy>
                 </policyEntry>
                 <% if @clean_inactive_destinations -%>
-                  <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup-%>" producerFlowControl="true" optimizedDispatch="true">
+                  <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup-%>" producerFlowControl="true" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
                 <% else -%>
-                  <policyEntry queue=">" producerFlowControl="true" optimizedDispatch="true">
+                  <policyEntry queue=">" producerFlowControl="true" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
                 <% end -%>
+                    <pendingSubscriberPolicy>
+                      <vmCursor/>
+                    </pendingSubscriberPolicy>
                     <pendingMessageLimitStrategy>
                       <prefetchRatePendingMessageLimitStrategy multiplier="2"/>
                     </pendingMessageLimitStrategy>
