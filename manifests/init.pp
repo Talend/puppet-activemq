@@ -25,7 +25,8 @@ class activemq (
   $persistence_pg_host             = undef,
   $persistence_pg_password         = undef,
   $ams_security_version            = 'latest',
-
+  $jetty_admin_user                = 'admin',
+  $jetty_admin_password            = 'admin'
 ) {
 
   class { '::activemq::install':
