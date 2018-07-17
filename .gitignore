@@ -11,3 +11,4 @@ spec/fixtures
 .kitchen.local.yml
 .tmp/
 modules/
+*.swp
