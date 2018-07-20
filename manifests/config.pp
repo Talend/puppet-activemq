@@ -13,7 +13,8 @@ class activemq::config (
   $auth_url              = $activemq::auth_url,
   $auth_refresh_interval = $activemq::auth_refresh_interval,
   $brokers               = $activemq::brokers,
-
+  $jetty_admin_user      = $activemq::jetty_admin_user,
+  $jetty_admin_password  = $activemq::jetty_admin_password
 ) {
 
   $brokers_list      = split($brokers, ',')
@@ -28,8 +29,11 @@ class activemq::config (
     content => template('activemq/activemq.xml.erb')
   }
 
+  file { '/opt/activemq/conf/jetty-realm.properties':
+    content => template('activemq/jetty-realm.properties.erb')
+  }
+
   file { '/opt/activemq/bin/env':
     content => template('activemq/activemq.env.erb')
   }
-
 }

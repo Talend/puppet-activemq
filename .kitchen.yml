@@ -20,6 +20,10 @@ verifier:
 
 suites:
   - name: default
+    driver:
+      vm_name: activemq
+      customize:
+        name: activemq
     provisioner:
       manifest: init.pp
       custom_facts:

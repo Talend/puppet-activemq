@@ -68,8 +68,10 @@ tomcat::service { 'activemq-security-service':
   use_jsvc       => false,
 } ->
 class { '::activemq':
-  pg_db       => 'ams',
-  pg_username => 'ams',
-  pg_password => 'ams',
-  auth_url    => 'http://localhost:9999/activemq-security-service/authenticate',
+  pg_db                => 'ams',
+  pg_username          => 'ams',
+  pg_password          => 'ams',
+  auth_url             => 'http://localhost:9999/activemq-security-service/authenticate',
+  jetty_admin_user     => 'testadmin',
+  jetty_admin_password => 'testpassword'
 }

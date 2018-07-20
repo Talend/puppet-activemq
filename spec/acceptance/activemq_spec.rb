@@ -26,7 +26,7 @@ describe 'activemq' do
     describe file('/opt/activemq/conf/activemq.xml') do
       its(:content) { should include '<bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"' }
       its(:content) { should include '<property name="activemqSecurityURL" value="http://localhost:9999/activemq-security-service/authenticate' }
-      its(:content) { should include '<property name="refreshInterval" value="900000" />' }
+      its(:content) { should include '<property name="refreshInterval" value="60000" />' }
     end
   end
 
@@ -39,4 +39,7 @@ describe 'activemq' do
     it { should exist }
   end
 
+  describe file('/opt/activemq/conf/jetty-realm.properties') do
+    its(:content) { should include 'testadmin: testpassword, admin' }
+  end
 end

@@ -60,7 +60,10 @@
         <destinationPolicy>
             <policyMap>
               <policyEntries>
-                <policyEntry queue="ipaas.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" >
+                <policyEntry queue="ipaas.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
+                    <pendingSubscriberPolicy>
+                        <vmCursor/>
+                    </pendingSubscriberPolicy>
                     <deadLetterStrategy>
                         <sharedDeadLetterStrategy processNonPersistent="true">
                             <deadLetterQueue>
@@ -69,7 +72,10 @@
                         </sharedDeadLetterStrategy>
                     </deadLetterStrategy>
                 </policyEntry>
-                <policyEntry queue="ipaas.ext.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" >
+                <policyEntry queue="ipaas.ext.container.*.*.input" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
+                    <pendingSubscriberPolicy>
+                        <vmCursor/>
+                    </pendingSubscriberPolicy>
                     <deadLetterStrategy>
                         <sharedDeadLetterStrategy processNonPersistent="true">
                             <deadLetterQueue>
@@ -92,8 +98,17 @@
                   </pendingMessageLimitStrategy>
                 </policyEntry>
                 <% if @clean_inactive_destinations -%>
-                <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup%>"/>
+                  <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="<%=@inactive_timeout_before_cleanup-%>" producerFlowControl="true" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
+                <% else -%>
+                  <policyEntry queue=">" producerFlowControl="true" queuePrefetch="500" queueBrowserPrefetch="1000" optimizedDispatch="true">
                 <% end -%>
+                    <pendingSubscriberPolicy>
+                      <vmCursor/>
+                    </pendingSubscriberPolicy>
+                    <pendingMessageLimitStrategy>
+                      <prefetchRatePendingMessageLimitStrategy multiplier="2"/>
+                    </pendingMessageLimitStrategy>
+                  </policyEntry>
               </policyEntries>
             </policyMap>
         </destinationPolicy>
@@ -181,9 +196,9 @@
         </networkConnectors>
 <% end -%>
         <transportConnectors>
-            <!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <!-- DOS protection, limit concurrent connections to 5000 and frame size to 100MB -->
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=5000&amp;wireFormat.maxFrameSize=104857600"/>
             <transportConnector name="http" uri="http://0.0.0.0:8080"/>
         </transportConnectors>
 
