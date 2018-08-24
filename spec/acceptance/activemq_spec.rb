@@ -16,6 +16,11 @@ describe 'activemq' do
     describe port(5432) do
       it { should be_listening }
     end
+
+    describe command('/bin/systemctl --no-pager show activemq.service') do
+      its(:stdout) { should include 'LimitNOFILE=64000' }
+      its(:stdout) { should include 'LimitNPROC=64000' }
+    end
   end
 
   context 'when activemq-security-plugin installed and configured' do
