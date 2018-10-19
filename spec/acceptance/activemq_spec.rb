@@ -57,6 +57,10 @@ describe 'activemq' do
     its(:content) { should include '<Set name="minThreads">10</Set>' }
   end
 
+  describe file('/opt/activemq/data/activemq.log') do
+    its(:content) { should include 'Configuring Jetty server using /opt/activemq/conf/jetty-server.xml' }
+  end
+
    describe command('/usr/bin/curl -s http://localhost:8080') do
      its(:exit_status) { should eq 0 }
      its(:stdout) { should include 'No clientID header specified' }
