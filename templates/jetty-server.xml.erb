@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<!-- File managed by Puppet, do not modify-->
+<Configure id="server" class="org.eclipse.jetty.server.Server">
+    <Arg>
+        <New class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+            <Set name="minThreads"><%= @jetty_server_min_threads %></Set>
+            <Set name="maxThreads"><%= @jetty_server_max_threads %></Set>
+        </New>
+    </Arg>
+</Configure>

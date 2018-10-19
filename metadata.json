@@ -1,8 +1,8 @@
 {
   "name": "talend-activemq",
-  "version": "0.3.7",
+  "version": "0.4",
   "author": "talend",
-  "summary": "Module managing ActiveMQ",
+  "summary": "Module managing ActiveMQ need at least ActiveMQ 5.15.7",
   "license": "MIT",
   "source": "https://github.com/Talend/puppet-activemq",
   "project_page": "https://github.com/Talend/puppet-activemq",
@@ -15,4 +15,3 @@
     {"name":"puppetlabs-tomcat", "version_requirement": "1.x"}
   ]
 }
-
