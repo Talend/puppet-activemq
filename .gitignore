@@ -1,4 +1,5 @@
 vendor/
+.ruby-version
 .bundle/
 .idea/
 .reviewboardrc
