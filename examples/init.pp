@@ -5,7 +5,7 @@ packagecloud::repo { 'talend/other':
   master_token => $packagecloud_master_token
 } ->
 class { 'postgresql::globals':
-  version             => '9.3',
+  version             => '9.5',
   encoding            => 'UTF8',
   locale              => 'en_NG',
   manage_package_repo => true

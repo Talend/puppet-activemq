@@ -26,7 +26,9 @@ class activemq (
   $persistence_pg_password         = undef,
   $ams_security_version            = 'latest',
   $jetty_admin_user                = 'admin',
-  $jetty_admin_password            = 'admin'
+  $jetty_admin_password            = 'admin',
+  $jetty_server_min_threads        = '10',
+  $jetty_server_max_threads        = '1000',
 ) {
 
   class { '::activemq::install':
@@ -39,5 +41,4 @@ class activemq (
   contain ::activemq::install
   contain ::activemq::config
   contain ::activemq::service
-
 }
