@@ -4,6 +4,9 @@ Description=Apache ActiveMQ
 [Service]
 Type=forking
 PIDFile=/opt/activemq/data/activemq.pid
+<%- if @jmx_enabled -%>
+Environment='ACTIVEMQ_SUNJMX_START=<%= @jmx_agent_opts %>'
+<%- end -%>
 ExecStart=/opt/activemq/bin/activemq start --extdir lib/tipaas
 ExecReload=/opt/activemq/bin/activemq restart --extdir lib/tipaas
 ExecStop=/opt/activemq/bin/activemq kill

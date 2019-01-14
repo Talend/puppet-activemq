@@ -2,6 +2,7 @@ class activemq (
 
   $version                         = 'latest',
   $jmx_enabled                     = false,
+  $jmx_agent_opts                  = '',
   $dispatcher_response_queue       = 'ipaas.dispatcher.response.queue',
   $brokers                         = $::hostname,
   $min_brokers                     = 1,
