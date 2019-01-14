@@ -1,7 +1,7 @@
 class activemq::install (
 
   $version              = $activemq::version,
-  $ams_security_version = $activemq::ams_security_version
+  $ams_security_version = pick($activemq::ams_security_version, 'latest')
 
 ) {
 
