@@ -67,4 +67,8 @@ describe 'activemq' do
      its(:stdout) { should include 'Powered by Jetty' }
    end
 
+   describe package('postgresql11') do
+     it { should be_installed }
+   end
+
 end
