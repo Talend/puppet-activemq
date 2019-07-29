@@ -11,7 +11,7 @@ transport:
   name: sftp
 
 platforms:
-  - name: centos-7.5
+  - name: centos-7.6
 
 verifier:
   name: serverspec
