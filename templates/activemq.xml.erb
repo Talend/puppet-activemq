@@ -29,23 +29,25 @@
         </property>
     </bean>
 
-   <!-- Allows accessing the server log -->
+    <!-- Allows accessing the server log -->
     <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
           lazy-init="false" scope="singleton"
           init-method="start" destroy-method="stop">
     </bean>
 
 <% if @persistence == 'postgres' -%>
-   <!-- Configures connection to the PostgreSQL used for persistence -->
-    <bean id="postgres-persist-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
-        <property name="dataSourceName" value="postgresPresistence"/>
-        <property name="serverName" value="<%= @persistence_pg_host %>"/>
-        <property name="portNumber" value="5432"/>
-        <property name="databaseName" value="activemq"/>
-        <property name="user" value="activemq"/>
+    <!-- Configures connection to the PostgreSQL used for persistence -->
+    <bean id="postgres-persist-ds" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://<%= @persistence_pg_host %>/activemq" />
+        <property name="username" value="activemq"/>
         <property name="password" value="<%= @persistence_pg_password %>"/>
-        <property name="initialConnections" value="<%= @pg_init_connections %>"/>
-        <property name="maxConnections" value="<%= @pg_max_connections %>"/>
+        <property name="initialSize" value="<%=  @pg_init_connections %>" />
+        <property name="maxTotal" value="<%= @pg_max_connections %>"/>
+        <property name="maxIdle" value="<%= @pg_init_connections %>"/>
+        <property name="validationQuery" value="select 1"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="3000"/>
     </bean>
 <% end -%>
 
@@ -151,13 +153,13 @@
               zkPassword="<%= @zk_password %>"
               zkPath="/activemq/<%= @zk_prefix %>/leveldb-stores"
               hostname="<%= @hostname %>"
-              />
+            />
           </persistenceAdapter>
 <% elsif @persistence == 'postgres' -%>
         <persistenceAdapter>
             <jdbcPersistenceAdapter dataDirectory="${activemq.data}" dataSource="#postgres-persist-ds" lockKeepAlivePeriod="5000">
                 <locker>
-                    <lease-database-locker lockAcquireSleepInterval="10000"/>
+                    <lease-database-locker lockAcquireSleepInterval="20000" leaseHolderId="<%= @broker_name_real %>" />
                 </locker>
             </jdbcPersistenceAdapter>
         </persistenceAdapter>
