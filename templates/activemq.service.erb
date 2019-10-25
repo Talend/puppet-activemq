@@ -3,11 +3,10 @@ Description=Apache ActiveMQ
 
 [Service]
 Type=forking
-PIDFile=/var/run/activemq/activemq.pid
+PIDFile=/opt/activemq/data/activemq.pid
 <%- if @jmx_enabled -%>
-Environment='ACTIVEMQ_SUNJMX_START=<%= @jmx_agent_opts %>' 'ACTIVEMQ_PIDFILE=/var/run/activemq/activemq.pid'
+Environment='ACTIVEMQ_SUNJMX_START=<%= @jmx_agent_opts %>'
 <%- end -%>
-ExecStartPre=/usr/bin/install -d -o activemq -g activemq -m 0700 /var/run/activemq
 ExecStart=/opt/activemq/bin/activemq start --extdir lib/tipaas
 ExecReload=/opt/activemq/bin/activemq restart --extdir lib/tipaas
 ExecStop=/opt/activemq/bin/activemq kill
