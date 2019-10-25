@@ -6,7 +6,7 @@ User=activemq
 Type=forking
 PIDFile=/opt/activemq/data/activemq.pid
 <%- if @jmx_enabled -%>
-Environment='ACTIVEMQ_SUNJMX_START=<%= @jmx_agent_opts %>' 'ACTIVEMQ_USER=activemq'
+Environment='ACTIVEMQ_SUNJMX_START=<%= @jmx_agent_opts %>'
 <%- end -%>
 ExecStart=/opt/activemq/bin/activemq start --extdir /opt/activemq/lib/tipaas
 ExecReload=/opt/activemq/bin/activemq restart --extdir /opt/activemq/lib/tipaas
