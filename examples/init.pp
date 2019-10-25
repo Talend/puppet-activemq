@@ -73,6 +73,6 @@ class { '::activemq':
   pg_password          => 'ams',
   auth_url             => 'http://localhost:9999/activemq-security-service/authenticate',
   jetty_admin_user     => 'testadmin',
-  jetty_admin_password => 'testpassword'
-  max_frame_size       => '500000'
+  jetty_admin_password => 'testpassword',
+  max_frame_size       => '500000',
 }
