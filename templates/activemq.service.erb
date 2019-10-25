@@ -2,13 +2,14 @@
 Description=Apache ActiveMQ
 
 [Service]
+User=activemq
 Type=forking
 PIDFile=/opt/activemq/data/activemq.pid
 <%- if @jmx_enabled -%>
 Environment='ACTIVEMQ_SUNJMX_START=<%= @jmx_agent_opts %>'
 <%- end -%>
-ExecStart=/opt/activemq/bin/activemq start --extdir lib/tipaas
-ExecReload=/opt/activemq/bin/activemq restart --extdir lib/tipaas
+ExecStart=/opt/activemq/bin/activemq start --extdir /opt/activemq/lib/tipaas
+ExecReload=/opt/activemq/bin/activemq restart --extdir /opt/activemq/lib/tipaas
 ExecStop=/opt/activemq/bin/activemq kill
 LimitNPROC=64000
 LimitNOFILE=64000
