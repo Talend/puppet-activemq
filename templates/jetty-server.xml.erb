@@ -7,8 +7,9 @@
             <Set name="minThreads"><%= @jetty_server_min_threads %></Set>
             <Set name="maxThreads"><%= @jetty_server_max_threads %></Set>
         </New>
-        <New class="org.eclipse.jetty.server.Request">
-            <Set name="maxFormContentSize"><%= @max_frame_size %></Set>
-        </New>
     </Arg>
+    <Call name="setAttribute">
+        <Arg>org.eclipse.jetty.server.Request.maxFormContentSize</Arg>
+        <Arg><%= @max_frame_size %></Arg>
+    </Call>
 </Configure>
