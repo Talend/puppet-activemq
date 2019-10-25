@@ -18,6 +18,8 @@ describe 'activemq' do
     end
 
     describe command('/bin/systemctl --no-pager show activemq.service') do
+      its(:stdout) { should include 'User=activemq' }
+      its(:stdout) { should include 'PIDFile=/opt/activemq/data/activemq.pid' }
       its(:stdout) { should include 'LimitNOFILE=64000' }
       its(:stdout) { should include 'LimitNPROC=64000' }
     end
