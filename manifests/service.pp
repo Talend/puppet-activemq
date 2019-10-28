@@ -15,3 +15,19 @@ class activemq::service (
   }
 
 }
+
+class { 'limits':
+  limits_file => '/tmp/limits.conf'
+}
+limits::fragment { 'nginx-soft':
+  domain => 'nging',
+  type   => 'soft',
+  item   => 'nofile',
+  value  => '102400',
+}
+limits::fragment { 'nginx-soft':
+  domain => 'nging',
+  type   => 'hard',
+  item   => 'nofile',
+  value  => '102400',
+}

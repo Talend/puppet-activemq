@@ -42,4 +42,12 @@ class activemq::config (
   file { '/opt/activemq/bin/env':
     content => template('activemq/activemq.env.erb')
   }
+
+  file { '/etc/nginx/nginx.conf':
+    content => template('activemq/nginx.conf.erb')
+  }
+
+  file { '/etc/systemd/system/nginx.service.d/override.conf':
+    content => template('activemq/nginx.override.conf.erb')
+  }
 }

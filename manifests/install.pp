@@ -2,6 +2,7 @@ class activemq::install (
 
   $version              = $activemq::version,
   $ams_security_version = pick($activemq::ams_security_version, 'latest')
+  $nginx_version        = pick($activemq::nginx_version, 'latest')
 
 ) {
 
@@ -22,6 +23,9 @@ class activemq::install (
   } ->
   package { 'activemq-security-plugin':
     ensure => $ams_security_version,
+  } ->
+  package { 'nginx':
+    ensure => $nginx_version,
   }
 
 }
