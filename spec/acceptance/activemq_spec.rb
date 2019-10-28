@@ -59,7 +59,6 @@ describe 'activemq' do
   describe file('/opt/activemq/conf/jetty-server.xml') do
     its(:content) { should include '<!-- File managed by Puppet, do not modify-->' }
     its(:content) { should include '<Set name="minThreads">10</Set>' }
-    its(:content) { should include '<Arg>500000</Arg>' }
   end
 
   describe file('/opt/activemq/data/activemq.log') do
