@@ -47,6 +47,10 @@ class activemq::config (
     content => template('activemq/nginx.conf.erb')
   }
 
+  file { '/etc/systemd/system/nginx.service.d':
+    ensure => 'directory'
+  }
+
   file { '/etc/systemd/system/nginx.service.d/override.conf':
     content => template('activemq/nginx.override.conf.erb')
   }

@@ -1,8 +1,8 @@
 class activemq::install (
 
   $version              = $activemq::version,
-  $ams_security_version = pick($activemq::ams_security_version, 'latest')
-  $nginx_version        = pick($activemq::nginx_version, 'latest')
+  $ams_security_version = pick($activemq::ams_security_version, 'latest'),
+  $nginx_version        = pick($activemq::nginx_version, 'latest'),
 
 ) {
 
@@ -23,6 +23,14 @@ class activemq::install (
   } ->
   package { 'activemq-security-plugin':
     ensure => $ams_security_version,
+  }
+
+  yumrepo { 'nginx-stable':
+    descr    => "nginx stable repo",
+    baseurl  => "http://nginx.org/packages/centos/\$releasever/\$basearch/",
+    enabled  => 1,
+    gpgcheck => 1,
+    gpgkey   => "https://nginx.org/keys/nginx_signing.key",
   } ->
   package { 'nginx':
     ensure => $nginx_version,
