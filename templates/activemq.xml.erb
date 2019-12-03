@@ -37,15 +37,13 @@
 
 <% if @persistence == 'postgres' -%>
     <!-- Configures connection to the PostgreSQL used for persistence -->
-    <bean id="postgres-persist-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
-      <property name="dataSourceName" value="postgresPersistence"/>
-      <property name="serverName" value="<%= @persistence_pg_host %>"/>
-      <property name="portNumber" value="5432"/>
-      <property name="databaseName" value="activemq"/>
-      <property name="user" value="activemq"/>
-      <property name="password" value="<%= @persistence_pg_password %>"/>
-      <property name="initialConnections" value="<%= @pg_init_connections %>"/>
-      <property name="maxConnections" value="<%= @pg_max_connections %>"/>
+    <bean id="postgres-persist-ds" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="JdbcUrl" value="jdbc:postgresql://<%= @persistence_pg_host %>/activemq" />
+        <property name="username" value="activemq"/>
+        <property name="password" value="<%= @persistence_pg_password %>"/>
+        <property name="connectionInitSql" value="select 1"/>
+        <property name="maximumPoolSize" value="<%= @pg_max_connections %>"/>
+        <property name="minimumIdle" value="<%= @pg_init_connections %>"/>
     </bean>
 <% end -%>
 
