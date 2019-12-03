@@ -37,17 +37,15 @@
 
 <% if @persistence == 'postgres' -%>
     <!-- Configures connection to the PostgreSQL used for persistence -->
-    <bean id="postgres-persist-ds" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://<%= @persistence_pg_host %>/activemq" />
-        <property name="username" value="activemq"/>
-        <property name="password" value="<%= @persistence_pg_password %>"/>
-        <property name="initialSize" value="<%=  @pg_init_connections %>" />
-        <property name="maxTotal" value="<%= @pg_max_connections %>"/>
-        <property name="maxIdle" value="<%= @pg_init_connections %>"/>
-        <property name="validationQuery" value="select 1"/>
-        <property name="testWhileIdle" value="true"/>
-        <property name="timeBetweenEvictionRunsMillis" value="3000"/>
+    <bean id="postgres-persist-ds" class="org.postgresql.ds.PGPoolingDataSource" destroy-method="close">
+      <property name="dataSourceName" value="postgresPersistence"/>
+      <property name="serverName" value="<%= @persistence_pg_host %>"/>
+      <property name="portNumber" value="5432"/>
+      <property name="databaseName" value="activemq"/>
+      <property name="user" value="activemq"/>
+      <property name="password" value="<%= @persistence_pg_password %>"/>
+      <property name="initialConnections" value="<%= @pg_init_connections %>"/>
+      <property name="maxConnections" value="<%= @pg_max_connections %>"/>
     </bean>
 <% end -%>
 
@@ -203,11 +201,12 @@
             <%- if defined?(@max_frame_size) -%>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=<%= @max_frame_size %>"/>
             <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=5000&amp;wireFormat.maxFrameSize=<%= @max_frame_size %>"/>
+            <transportConnector name="http" uri="http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml&amp;wireFormat.maxFrameSize=<%= @max_frame_size %>"/>
             <%- else -%>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000"/>
             <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=5000"/>
-            <%- end -%>
             <transportConnector name="http" uri="http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml"/>
+            <%- end -%>
         </transportConnectors>
 
         <!-- destroy the spring context on shutdown to stop jetty -->
