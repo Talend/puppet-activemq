@@ -2,7 +2,7 @@
   "name": "talend-activemq",
   "version": "0.5",
   "author": "talend",
-  "summary": "Module managing ActiveMQ need at least ActiveMQ 5.15.11",
+  "summary": "Module managing ActiveMQ need at least ActiveMQ 5.15.11 and HikariCP in extra libs",
   "license": "MIT",
   "source": "https://github.com/Talend/puppet-activemq",
   "project_page": "https://github.com/Talend/puppet-activemq",
