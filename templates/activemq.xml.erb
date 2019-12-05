@@ -195,12 +195,15 @@
         </networkConnectors>
 <% end -%>
         <transportConnectors>
-            <!-- DOS protection, limit concurrent connections to 5000 and frame size to a max_frame_size (default 200kB) -->
-            <%- if defined?(@max_frame_size) -%>
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=<%= @max_frame_size %>"/>
-            <transportConnector name="http" uri="http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml&amp;wireFormat.maxFrameSize=<%= @max_frame_size %>"/>
+            <!-- DOS protection, limit concurrent connections to 5000 and frame size to a max_frame_size if defined -->
+            <%- if defined?(@tcp_max_frame_size) -%>
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=<%= @tcp_max_frame_size %>"/>
             <%- else -%>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000"/>
+            <%- end -%>
+            <%- if defined?(@http_max_frame_size) -%>
+            <transportConnector name="http" uri="http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml&amp;wireFormat.maxFrameSize=<%= @http_max_frame_size %>"/>
+            <%- else -%>
             <transportConnector name="http" uri="http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml"/>
             <%- end -%>
         </transportConnectors>
