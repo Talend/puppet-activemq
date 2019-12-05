@@ -30,7 +30,8 @@ class activemq (
   $jetty_admin_password            = 'admin',
   $jetty_server_min_threads        = '10',
   $jetty_server_max_threads        = '1000',
-  $max_frame_size                  = undef,
+  $tcp_max_frame_size              = undef,
+  $http_max_frame_size             = undef,
 ) {
 
   class { '::activemq::install':

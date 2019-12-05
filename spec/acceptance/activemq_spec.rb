@@ -31,7 +31,7 @@ describe 'activemq' do
     end
 
     describe file('/opt/activemq/conf/activemq.xml') do
-      its(:content) { should include '<transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=500000"/>' }
+      its(:content) { should include '<transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=5000&amp;wireFormat.maxFrameSize=1000000"/>' }
       its(:content) { should include '<transportConnector name="http" uri="http://0.0.0.0:8080?jetty.config=/opt/activemq/conf/jetty-server.xml&amp;wireFormat.maxFrameSize=500000"/>' }
       its(:content) { should include '<bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"' }
       its(:content) { should include '<property name="activemqSecurityURL" value="http://localhost:9999/activemq-security-service/authenticate' }
