@@ -19,6 +19,7 @@ class activemq::config (
   $jetty_server_max_threads = $activemq::jetty_server_max_threads,
   $tcp_max_frame_size       = $activemq::tcp_max_frame_size,
   $http_max_frame_size      = $activemq::http_max_frame_size,
+  $network_connector_uri    = $activemq::network_connector_uri,
 ) {
 
   $brokers_list      = split($brokers, ',')

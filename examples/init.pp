@@ -68,12 +68,13 @@ tomcat::service { 'activemq-security-service':
   use_jsvc       => false,
 } ->
 class { '::activemq':
-  pg_db                => 'ams',
-  pg_username          => 'ams',
-  pg_password          => 'ams',
-  auth_url             => 'http://localhost:9999/activemq-security-service/authenticate',
-  jetty_admin_user     => 'testadmin',
-  jetty_admin_password => 'testpassword',
-  tcp_max_frame_size   => '1000000',
-  http_max_frame_size  => '500000',
+  pg_db                 => 'ams',
+  pg_username           => 'ams',
+  pg_password           => 'ams',
+  auth_url              => 'http://localhost:9999/activemq-security-service/authenticate',
+  jetty_admin_user      => 'testadmin',
+  jetty_admin_password  => 'testpassword',
+  tcp_max_frame_size    => '1000000',
+  http_max_frame_size   => '500000',
+  network_connector_uri => 'static:(tcp://localhost:61617)',
 }
