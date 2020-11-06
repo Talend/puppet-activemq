@@ -221,6 +221,11 @@
             </bean>
         </plugins>
 
+        <% if defined?(@network_connector_uri) -%>
+        <networkConnectors>
+            <networkConnector name="connector-bridge"  uri="<%= network_connector_uri %>" />
+        </networkConnectors>
+        <%- end -%>
     </broker>
 
     <!--

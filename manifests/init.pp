@@ -32,6 +32,7 @@ class activemq (
   $jetty_server_max_threads        = '1000',
   $tcp_max_frame_size              = undef,
   $http_max_frame_size             = undef,
+  $network_connector_uri           = undef,
 ) {
 
   class { '::activemq::install':

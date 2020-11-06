@@ -36,6 +36,7 @@ describe 'activemq' do
       its(:content) { should include '<bean id="tipaasSecurityPlugin" class="org.talend.ipaas.rt.amq.security.TipaasSecurityPlugin"' }
       its(:content) { should include '<property name="activemqSecurityURL" value="http://localhost:9999/activemq-security-service/authenticate' }
       its(:content) { should include '<property name="refreshInterval" value="60000" />' }
+      its(:content) { should include '<networkConnector name="connector-bridge"  uri="static:(tcp://localhost:61617)" />' }
     end
   end
 
