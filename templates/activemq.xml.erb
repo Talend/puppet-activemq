@@ -223,7 +223,7 @@
 
         <% if defined?(@network_connector_uri) -%>
         <networkConnectors>
-            <networkConnector name="connector-bridge"  uri="<%= network_connector_uri %>" />
+            <networkConnector name="connector-bridge"  uri="<%= @network_connector_uri %>"<% if defined?(@network_connector_user) -%> userName="<%= @network_connector_user %>" password="<%= @network_connector_password %>"<%- end -%> />
         </networkConnectors>
         <%- end -%>
     </broker>

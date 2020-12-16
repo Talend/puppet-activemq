@@ -33,6 +33,8 @@ class activemq (
   $tcp_max_frame_size              = undef,
   $http_max_frame_size             = undef,
   $network_connector_uri           = undef,
+  $network_connector_user          = undef,
+  $network_connector_password      = undef,
 ) {
 
   class { '::activemq::install':
